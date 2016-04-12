@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Nileshingle.GitHub.io : Github Projects">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Nilesh Ingle</title>
+            <!-- Script to include code in HTML .............. -->
+           <script type="text/javascript" src="http://alexgorbatchev.com/pub/sh/2.1.364/scripts/shCore.js"></script>
+            <script type="text/javascript" src="http://alexgorbatchev.com/pub/sh/2.1.364/scripts/shBrushRuby.js"></script> <script type="text/javascript" src="http://alexgorbatchev.com/pub/sh/2.1.364/scripts/shLegacy.js"></script>
+            <link type="text/css" rel="stylesheet" href="http://alexgorbatchev.com/pub/sh/2.1.364/styles/shCore.css" />
+            <link type="text/css" rel="stylesheet" href="http://alexgorbatchev.com/pub/sh/2.1.364/styles/shThemeDefault.css" />     <script language="javascript">
+            window.onload = function () {
+                dp.SyntaxHighlighter.ClipboardSwf = 'http://alexgorbatchev.com/pub/sh/2.1.364/scripts/clipboard.swf';
+                dp.SyntaxHighlighter.HighlightAll('code');
+                dp.SyntaxHighlighter.BloggerMode();
+            }
+            </script>
+            <!-- ............................... -->
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/nileshingle">View on GitHub</a>
+
+          <h1 id="project_title">Nileshingle.GitHub.io</h1>
+          <h2 id="project_tagline">Github Projects</h2>
+        </header>
+          <ul class="nav">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="projects.html">Projects</a></li>
+              <li><a href="contact.html">Contact</a></li>
+          </ul>        
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+
+
+<h3>
+<a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>2. Work Market</h3>
+<p><em>Posted: April 11, 2016; Updated: April 12, 2016</em></p>
+
+<p align="justify">In this project, the jobs in New York were analyzed for various parameters such as agency, job posting duration, job requirements and salary. The data was first analyzed assuming that each repeated position was a newly created position. In the second round of analysis, uniqueness criteria was applied where the assumption was that the repeated position was the same as previous position that remained unfilled. This is an ongoing work and the analysis of parameters 'Job Description', 'Minimum Qual Requirements', 'Preferred Skills', 'Additional Information' remains to be explored.</p> 
+<p><em>Note: To view the enlarged figures please right click on the image to click 'View Image'.</em></p>
+
+<p> <h5>Source of Data:</h5> Data file in .csv format was downloaded from <a href="https://data.cityofnewyork.us/Business/NYC-Jobs/kpav-sd4t">NYC Open Data.</a></p>
+
+<p> <h5>Questions asked:</h5>
+    <ol>
+    <li>Find out which agencies have highest number of job openings. </li>
+    <li>Find out which positions have highest and lowest salaries. </li>
+    <li>Are there any jobs that take too long to fill, if yes which one.</li>
+    <li>Is there any effect of residency requirement on filling a job.</li>
+    <li>Is there any effect of level of a job on salary.</li> 
+  </ol>
+
+</p>
+
+<p> <h5>Possible answers:</h5>
+    <ol>
+    <li>The Department of Health/Mental Hygiene (DOHH) has the highest number of open positions (Figure 1). </li>
+    <li>The Department for Environmental Protection (DOEP) has the lowest salary of USD 8 per hour for the position of Clerical Associate (Figure 4). Whereas, Fire Department has the highest salary of USD 78 per hour for the position of City Medical Specialist (Figure 5). </li>
+    <li>Yes, there are positions that take more than 1000 days to fill/process. The toughest position to fill appears to be Contract Reviewer with Department of Business Services (DOBS) that may exceed 1700 days or 4.7 years (Figures 6 to 9 and 11)</li>
+    <li>Residency requirements appears to have little effect on the number days required to fill a job (Figure 13). </li>
+    <li>There appears to be no direct relationship between salary and number of days required to fill the job (Figure 14)</li> 
+  </ol>
+
+</p>
+
+<p> <h5>Sample code:</h5></p>
+<p>
+<pre class="brush: ruby" name="code"># Abbreviating agency names
+  jobs$agency.abr <- abbreviate(jobs$Agency)
+  </pre><br>
+
+<pre class="brush: ruby" name="code"># Function to convert annual and monthly salary to hourly salary
+salconvert <- function(sal, salfreq){
+  salfreq <- as.character(salfreq)
+  if (salfreq == "Annual"){
+    #print(Salary.Range.From/(365*8))
+    return (sal/(365*8))  #convert annual pay to hourly rate 8 h/day
+  }else if (salfreq == "Monthly"){
+    return (sal/(30*8))
+  }else if (salfreq == "Hourly"){
+    return (sal)
+  } else{
+    return ("NULL")
+  }
+}
+</pre><br>
+<pre class="brush: ruby" name="code"># sample code for plot
+  ggplot(jobs)+
+  aes(x=post.to.process, y = Salary.Frequency)+
+  geom_point(size = 5, alpha = 0.5,aes(color=Level))+
+  facet_wrap(~Residency)+
+  xlab ("Number of days") +
+  ylab ("Salary Frequency")+
+  ggtitle ("Days to fill vs. salary frequency")+
+  theme(axis.text.x = element_text(size = 12, angle=0, vjust=1, hjust = 1),
+        axis.title=element_text(size=14,face="bold"),
+        legend.text = element_text(size = 12),
+        plot.margin=unit(c(1,1,1.5,1.2),"cm"))+
+  guides(fill=guide_legend(ncol=2))
+
+
+</pre>
+</p>
+<p> <h5>Figure gallery:</h5>
+<figure><img src="images/work_market/Plot_1.png" alt="Plot_1">
+  <figcaption> Figure 1: Total number of vacancies with different agencies.</figcaption></figure><br>
+<!--<figure><img src="images/work_market/Plot_2.png" alt="Plot_2">
+  <figcaption> Figure 2: Hourly salary (in USD) of positions within each agency.</figcaption></figure><br> -->
+<figure><img src="images/work_market/Plot_3.png" alt="Plot_3">
+  <figcaption> Figure 2: Levels of positions with different agenices in both internal and external job postings.</figcaption></figure><br>
+
+<figure><img src="images/work_market/Plot_4.png" alt="Plot_4">
+  <figcaption> Figure 3: Agencies that offer a salary above USD 20 per hour.</figcaption></figure><br>
+
+<figure><img src="images/work_market/Plot_5.png" alt="Plot_5">
+  <figcaption> Figure 4: Agencies that offer a salary below USD 10 per hour.</figcaption></figure><br>
+
+<!--<img src="images/work_market/Plot_6.png" alt="Plot_6"><br> -->
+<figure><img src="images/work_market/Plot_7.png" alt="Plot_7">
+  <figcaption> Figure 5: Agencies that offer a salary above USD 60 per hour.</figcaption></figure><br>
+
+<figure><img src="images/work_market/Plot_8.png" alt="Plot_8">
+  <figcaption> Figure 6: Number of days to process a job for different agencies.</figcaption></figure><br>
+
+<figure><img src="images/work_market/Plot_9.png" alt="Plot_9">  
+  <figcaption> Figure 7: Number of days to update a job for different agencies.</figcaption></figure><br>
+
+<figure><img src="images/work_market/Plot_10.png" alt="Plot_10">  
+  <figcaption> Figure 8: Jobs that need atleast 1 year to be filled.</figcaption></figure><br>
+
+<figure><img src="images/work_market/Plot_11.png" alt="Plot_11">  
+  <figcaption> Figure 9: Jobs that need atleast 2 years to be filled.</figcaption></figure><br>
+
+<figure><img src="images/work_market/Plot_12.png" alt="Plot_12">  
+  <figcaption> Figure 10: Availability of jobs at different levels as internal or external posting.</figcaption></figure><br>
+
+<figure><img src="images/work_market/Plot_13.png" alt="Plot_13">  
+  <figcaption> Figure 11:  Jobs that need atleast 2 years to be filled.</figcaption></figure><br>
+
+<!--<figure><img src="images/work_market/Plot_14.png" alt="Plot_14">  
+  <figcaption> Figure 10: Availability of jobs at different levels as internal or external posting.</figcaption></figure><br> -->
+
+<figure><img src="images/work_market/Plot_15.png" alt="Plot_15">  
+  <figcaption> Figure 12: Internal vs. external job positions with (Y) or without (N) residency requirements.</figcaption></figure><br>
+
+<figure><img src="images/work_market/Plot_16.png" alt="Plot_16">  
+  <figcaption> Figure 13: Residency requirement vs. number of days required to fill a job.</figcaption></figure><br>
+
+<figure><img src="images/work_market/Plot_17_2.png" alt="Plot_17">  
+  <figcaption> Figure 14: Salary vs. number of days required to fill a job.</figcaption></figure><br>
+
+<figure><img src="images/work_market/Plot_18.png" alt="Plot_18">  
+  <figcaption> Figure 15: Frequency of salary (hourly, weekly, monthly) vs. number of days required to fill a job.</figcaption></figure><br>
+
+<!--<figure><img src="images/work_market/Plot_19.png" alt="Plot_19">  
+  <figcaption> Figure 10: Availability of jobs at different levels as internal or external posting.</figcaption></figure><br> -->
+
+<figure><img src="images/work_market/Plot_20.png" alt="Plot_20">  
+  <figcaption> Figure 16: Jobs with pay less than USD 15 per hour. <em>(Re-analyzed data after considering uniqueness of positions in database. Assuming, that repeated position in multiple rows is not a newly created same position however it is rather the same position that remanined unfilled after previous posting.)</em> </figcaption></figure><br>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>

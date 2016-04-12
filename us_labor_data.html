@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Nileshingle.GitHub.io : Github Projects">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Nilesh Ingle</title>
+            <!-- Script to include code in HTML .............. -->
+           <script type="text/javascript" src="http://alexgorbatchev.com/pub/sh/2.1.364/scripts/shCore.js"></script>
+            <script type="text/javascript" src="http://alexgorbatchev.com/pub/sh/2.1.364/scripts/shBrushRuby.js"></script> <script type="text/javascript" src="http://alexgorbatchev.com/pub/sh/2.1.364/scripts/shLegacy.js"></script>
+            <link type="text/css" rel="stylesheet" href="http://alexgorbatchev.com/pub/sh/2.1.364/styles/shCore.css" />
+            <link type="text/css" rel="stylesheet" href="http://alexgorbatchev.com/pub/sh/2.1.364/styles/shThemeDefault.css" />     <script language="javascript">
+            window.onload = function () {
+                dp.SyntaxHighlighter.ClipboardSwf = 'http://alexgorbatchev.com/pub/sh/2.1.364/scripts/clipboard.swf';
+                dp.SyntaxHighlighter.HighlightAll('code');
+                dp.SyntaxHighlighter.BloggerMode();
+            }
+            </script>
+            <!-- ............................... -->
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/nileshingle">View on GitHub</a>
+
+          <h1 id="project_title">Nilesh Ingle</h1>
+          <h2 id="project_tagline">Github Projects</h2>
+        </header>
+          <ul class="nav">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="projects.html">Projects</a></li>
+              <li><a href="contact.html">Contact</a></li>
+          </ul>        
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+
+
+<h3>
+<a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>2. US Labor Data</h3>
+<p><em>Posted: April 11, 2016; Updated: April 12, 2016</em></p>
+
+<p>In this project the layoff data from US Bureau of Labor Statistics was analyzed to identify relevant industries, reasons for layoffs, demographics etc. In this data, the event of a mass layoff refers to atleast 50 or more people leaving a company for at least 31 days. The data was downloaded using the data query tool on BLS website. The industry data was from the group 'Industry data from 1995 to present <a href="http://www.bls.gov/iag/tgs/iag_index_naics.htm">(NAICS)</a>". Here, each set of data is identified by an important parameter called 'series id'.</p>
+
+
+<p> <h5>Source of Data:</h5> Data file in .csv format was downloaded from <a href="http://www.bls.gov/mls/"> Mass Layoff Statistics (MLS)</a> and <a href="http://www.bls.gov/jlt/"> Job Openings and Labor Turnover Survey (JOLTS).</a>
+
+</p>
+
+<p> <h5>Questions asked:</h5>
+    <ol>
+    <li>Which years during the past decade had the highest layoffs? </li>
+    <li>Which industries showed the highest layoffs for these years?</li>
+    <li>How does the number of layoffs look across different states in US?</li>
+    <li>What year during the past decade had the lowest number of job openings/hiring?</li>
+    <li>What were some of the reasosn for layoffs?</li> 
+    <li>What were the deomographics of layoffs?</li>
+  </ol>
+
+</p>
+
+<p> <h5>Possible answers:</h5>
+    <ol>
+    <li>The year 2009 showed highest number of layoffs reaching 28000. (Figure 1) </li>
+    <li>The Manufacturing industry showed highest number of layoffs in 2009 (Figures 2 and 3). And within manufacturing the 'Transportation equipment' segement showed highest layoffs (Figure 4). Further, withing limited availability of data on only four industries from BLS, show that 'Food' industry had highest layoffs in the year 2009 followed by 'Textil mills' (Figures 5 and 6). The 'Food' industry layoffs were highest in the state of California, whereas the 'Texile mills' layoffs were highest in the state of South Carolina (Figure 7).  </li>
+    <li>The lowest number of job openings appear to be in the year 2009 (Figures 8 and 9)</li>
+    <li>The primary reason for layoffs in the year 2009 was 'Business demand' followed by 'Seasonal' demand (Figure 10). Within 'Business demand' the main contributing reasons seem to be slack work, insufficient demand, and non-seasonal business demand. The second reason contributing to layoffs due to business demand was 'Contract completion' (Figure 11).</li> 
+    <li>During the years 1996 to 2003 the pattern of demographics of layoffs appears to remain fairly constant. Among sexes, a total of more men were laid off as compared to women. Among different age groups, the individuals in age group 30 to 44 were laid off more than any other age group. Interestingly, the individuals under the age of 30 years showed least number of layoffs.</li>
+  </ol>
+
+</p>
+
+<p> <h5>Sample code:</h5></p>
+<p>
+<pre class="brush: ruby" name="code"># Function to convert series id into vector....
+# This function can be modified to fit a 'series id' of a specific configuration that is determined by length of string, position of characters and element code.
+readSeriesID <- function (seriesid){
+  temp <- 0
+  count <- 0
+  for (i in 1:(7+1)){
+    if(count == 0){
+      start <- 1
+      stop <- 2
+    }else if (count ==2){
+      start <- 3
+      stop <- 3
+    }else if (count == 3){
+      start <- 4
+      stop <- 4
+    }else if (count == 4){
+      start <- 5
+      stop <- 7
+    }else if (count == 5){
+      start <- 8
+      stop <- 8
+    }else if (count == 6){
+      start <- 9
+      stop <- 13
+    }else if (count == 7){
+      start <- 14
+      stop <- 16
+    }
+    temp <- c(temp, substr(seriesid, start,stop))
+    count <- count + 1
+  }
+  return (temp[2:8])
+} </pre>
+
+<pre class="brush: ruby" name="code"># Function 'to convert series id vector into columns
+# States, Industry/Reason/Demographics
+indCol <- function(dFrame1, dFrame2, col1, svec, col_num){
+  dFrame1[,col1] <- as.character(dFrame1[,col1]) #<<< note: using "$" did not work so used "[]"
+  dFrame2[,col1] <- as.character(dFrame2[,col1])
+  num1 <- grep(svec[5], dFrame1[,col1]) #use grep to the number location
+  num2 <- grep(svec[7], dFrame2[,col1])
+  t1 <- as.character(dFrame1[num1, col_num]) # convert to 'character'
+  t2 <- as.character(dFrame2[num2, col_num])
+  t <- list(t1, t2)
+  return (t)
+}</pre>
+
+<pre class="brush: ruby" name="code"># For loop to create new columns to store data from series id
+  for (i in 1:nrow(m2_data)){
+  seriesid <- readSeriesID(as.character(m2_data$Series_ID[i]))
+  re <- indCol(state_code, industry_code, "Code", seriesid, 2)
+  m2_data$State[[i]] <- re[[1]]
+  m2_data$Industry[[i]] <- re[[2]]
+} </pre>
+
+<p> <h5>Figure gallery:</h5>
+<figure><img src="images/US_labor_data/Plot_1.png" alt="Plot_1">
+  <figcaption> Figure 1: Year 2009 shows highest number of mass layoffs.</figcaption></figure><br>
+
+<figure><img src="images/US_labor_data/Plot_2.png" alt="Plot_2">
+  <figcaption> Figure 2: Indstries involved in mass layoffs during years 2003 to 2012.</figcaption></figure><br>
+
+<figure><img src="images/US_labor_data/Plot_3.png" alt="Plot_3">
+  <figcaption> Figure 3: Total layoffs in 2009. Manufacturing sector within these totals show highest layoffs.</figcaption></figure><br> 
+
+
+<img src="images/US_labor_data/Plot_4_2.png" alt="Plot_4_2">
+  <figcaption> Figure 4: Manufacurting layoffs in different US States in 2009. <br>
+ </figcaption></figure><br>
+
+<figure><img src="images/US_labor_data/Plot_6.png" alt="Plot_6">
+  <figcaption> Figure 5: Statewise layoffs within manufacturing sector in the year 2009.<br>
+    <p align="justify"><em>Important ! Data for layoffs within manufacturing for different states was not available for other indudstries within manufacturing. Therefore, further analysis of the 'Transportation and Equipment' segment with highest layoffs was not possible.</em></p>
+  </figcaption></figure><br> 
+
+<figure><img src="images/US_labor_data/Plot_5.png" alt="Plot_5">
+  <figcaption> Figure 6: Layoffs within food industry was highest among beverage - tobacco products and textiles in the year 2009.</figcaption></figure><br> 
+
+
+<figure><img src="images/US_labor_data/Plot_7.png" alt="Plot_7">
+  <figcaption> Figure 7: State of California shows highest layoffs in 2009 in food, beverage and textile manufacturing in 2009.</figcaption></figure><br> 
+
+<figure><img src="images/US_labor_data/Plot_8.png" alt="Plot_8">
+  <figcaption> Figure 8: Total employee turnover rate (or percent) in US in nonfarm industries in years 2006 to 2015. Note: <a href="http://www.bls.gov/jlt/jltprovq.htm">'turnover'</a> indicates job openings, hires, quits, layoffs and discharges, and other separations. <br><em>Note: In this stacked bar-plot, the y-axis values are rates or percentages. It is the total of all percentage point changes over 12 months. For example in series ID LNS14000000, the percent unemployment rate was Jan: 4.7, Feb: 4.8, Mar: 4.7, Apr: 4.7, May: 4.6, Jun: 4.6, July: 4.7, Aug: 4.7, Sep: 4.5, Oct: 4.4, Nov: 4.5, Dec: 4.4 which adds to a total of 55.3 points.</em></figcaption></figure><br> 
+
+<figure><img src="images/US_labor_data/Plot_9.png" alt="Plot_9">
+  <figcaption> Figure 9: Industry distribution of turnover rate (
+    or percent) between the years 2006 to 2015. The year 2009 shows least total turnover.</figcaption></figure><br> 
+
+
+<!-- <img src="images/US_labor_data/Plot_11.png" alt="Plot_11"><br> -->
+<figure><img src="images/US_labor_data/Plot_12.png" alt="Plot_12">
+  <figcaption> Figure 10: Reasons for layoffs between the  years 2003 and 2015. The 'Business demand' dominates most of the layoffs in the year 2009.</figcaption></figure><br> 
+
+<figure><img src="images/US_labor_data/Plot_13.png" alt="Plot_13">
+  <figcaption> Figure 11: Reasons for layoffs within 'Business demand'. In the year 2009, slack work, insufficient demand and non-seasonal business slowdown seems to be the main reason for layoffs.</figcaption></figure><br> 
+
+<figure><img src="images/US_labor_data/Plot_14.png" alt="Plot_14">
+  <figcaption> Figure 12: Statewise distribution of reasons for layoffs between the years 2003 to 2012.</figcaption></figure><br> 
+
+<!-- <img src="images/US_labor_data/Plot_15.png" alt="Plot_15"><br> -->
+
+<figure><img src="images/US_labor_data/Plot_16.png" alt="Plot_16">
+  <figcaption> Figure 13: Demographics of layoffs between the years 1996 to 2003. <br>
+    <em>Note: The data for demographics for the years 2004 to 2015 was not available and therefore not included in this plot.</em></figcaption></figure><br> 
+
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
