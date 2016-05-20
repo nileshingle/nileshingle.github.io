@@ -146,7 +146,7 @@ GROUP BY CONCAT(employee.firstname, CONCAT(' ', employee.lastname)), customer.co
 ORDER BY employee_name, Count(*) DESC;
 </pre>
 <pre class="brush: ruby" name="code">--Query result (partial only)
-  EMPLOYEE_NAME COUNTRY COUNT(%)
+  EMPLOYEE_NAME COUNTRY COUNT(*)
 Jane Peacock  Canada          35
 Jane Peacock  USA             21
 Jane Peacock  France          14
